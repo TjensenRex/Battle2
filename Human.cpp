@@ -7,7 +7,7 @@
 Human::Human(string playerName) {
     name = playerName;
     health = BASE_HEALTH;
-    attack = BASE_ATTACK;
+    attack = BASE_ATTACK + weapon.GetAttack();
     defense = BASE_DEF;
 }
 void Human::Attack(Human* defender) {

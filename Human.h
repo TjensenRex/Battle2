@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include "Weapon.h"
 using namespace std;
 
 const static int BASE_HEALTH = 50;
@@ -20,7 +21,7 @@ public:
     virtual void DisplayStats();
     virtual void DisplayActions(Human* defender);
     void TakeDamage(int damage);
-    //int GetAttack() const;
+    int GetAttack() const;
     int GetHealth() const;
     int GetDefense() const;
     string GetName() const;
@@ -30,6 +31,7 @@ protected:
     unsigned int attack;
     unsigned int defense;
     string name;
+    Weapon weapon;
 };
 
 

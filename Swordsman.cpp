@@ -3,15 +3,16 @@
 //
 
 #include "Swordsman.h"
-const int BASE_ATK = 10;
+const int BASE_ATK = 0;
 const int BASE_HP = 60;
 const int BASE_DF = 5;
 Swordsman::Swordsman(string playerName) {
-        name = playerName;
-        attack = BASE_ATK;
-        health = BASE_HP;
-        defense = BASE_DF;
-        martialActive = false;
+    weapon.Equip();
+    name = playerName;
+    attack = BASE_ATK + weapon.GetAttack();
+    health = BASE_HP;
+    defense = BASE_DF;
+    martialActive = false;
 }
 
 void Swordsman::MartialStrike() {
@@ -36,7 +37,7 @@ void Swordsman::Attack(Human* defender) {
         cout << defender->GetName() << " takes " << attack - defender->GetDefense() << " damage." << endl;
         defender->TakeDamage(attack);
         martialActive = false;
-        attack = BASE_ATK;
+        attack = BASE_ATK + weapon.GetAttack();
         defense = BASE_DF;
     }
 }
