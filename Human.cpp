@@ -39,4 +39,3 @@ void Human::DisplayStats() {
          << "defense: " << defense << endl
          << "attack: " << attack << endl;
 }
-

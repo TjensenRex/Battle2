@@ -65,4 +65,3 @@ void Wizard::DisplayActions(Human *defender) {
         DisplayActions(defender);
     }
 }
-
