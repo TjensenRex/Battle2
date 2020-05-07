@@ -92,15 +92,8 @@ int main() {
         }
         else {
             target = rand() % combatList.size();
-            cout << target << endl;
             combatList.insert(combatList.begin() + target, character);
-            cout << "character added" << endl;
         }
-    }
-    cout << "list size: " << combatList.size() << endl;
-
-    for(Human* names : combatList) {
-        cout << combatList.size() << endl << names->GetName() << endl;
     }
     cout << endl;
 
