@@ -15,6 +15,12 @@ void Human::Attack(Human* defender) {
     defender->TakeDamage(attack);
 }
 void Human::DisplayActions(Human* defender) {
+
+    if (health <= 0) {
+        cout << name << " is currently unconscious." << endl;
+        return;
+    }
+
     cout << "Attack" << endl;
     Attack(defender);
 }

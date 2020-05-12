@@ -7,6 +7,6 @@
 Enemy::Enemy(string playerName) {
     name = playerName;
     health = 80;
-    attack = 50;
+    attack = 35;
     defense = 5;
 }
