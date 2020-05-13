@@ -27,9 +27,8 @@ int main() {
     cout << "Please create a player by choosing a class: \nWizard \nSwordsman" << endl;
     getline(cin, classChoice);
 
-    /* This first part prompts a user to type a class name until a valid class name is entered. Although "Human" is the
-     * base class of these two classes, it is not available as an option. Eventually, might try to create an "inventory"
-     * class or vector data member for "Human" that can hold items which modify the player's stats */
+    /* This first part prompts a user to type a class name until a valid class name is entered. Eventually, might try to
+     * create an "inventory" class or vector data member for "Human" that can hold items which modify the player's stats */
     while (classChoice != "Done") {
 
         while ((classChoice != "Wizard") && (classChoice != "Swordsman")) {
@@ -39,6 +38,7 @@ int main() {
             }
         }
         cout << "And what will their name be?" << endl;
+        //loop until a unique name is entered
         do {
             getline(cin, playerName);
             if (playerRoster.count(playerName) == 1) {
@@ -66,6 +66,7 @@ int main() {
     for (pair<string, Human*> characterName : playerRoster) {
         cout << characterName.first << endl;
     }
+    //loop until three valid characters are selected, displaying a list of current selections
     for (int i = 0; i < PARTY_SIZE;) {
         cout << "Choose from the list to create your party: " << endl;
         for (Human* character : partyList) {
@@ -110,59 +111,60 @@ int main() {
      * Eventually, would like to learn how to call this as part of a larger program */
     /*party system needs:
      * going in an order determined randomly by the system.*/
+    try {
+        while (playerRoster[TEST_DUMMY]->GetHealth() > 0) {
+            for (Human *currentPlayer : combatList) {
+                if (typeid(*currentPlayer).name() != typeid(Enemy).name()) {
+                    //attack steps for party members
+                    if (currentPlayer->GetHealth() > 0) {
+                        cout << playerRoster[TEST_DUMMY]->GetName() << ": " << playerRoster[TEST_DUMMY]->GetHealth()
+                             << "hp"
+                             << endl << endl;
+                        cout << currentPlayer->GetName() << ", it is your turn. What will you do?" << endl;
 
-    while(playerRoster[TEST_DUMMY]->GetHealth() > 0|| (combatList.size() <= 1)) {
-        for(Human* currentPlayer : combatList) {
-            if (typeid(*currentPlayer).name() != typeid(Enemy).name()) {
-                //attack steps for party members
-                if (currentPlayer->GetHealth() > 0) {
-                    cout << playerRoster[TEST_DUMMY]->GetName() << ": " << playerRoster[TEST_DUMMY]->GetHealth() << "hp"
-                         << endl << endl;
-                    cout << currentPlayer->GetName() << ", it is your turn. What will you do?" << endl;
-
-                    currentPlayer->DisplayStats();
-                    currentPlayer->DisplayActions(playerRoster[TEST_DUMMY]);
-                    cout << endl;
-                    //check if Enemy is defeated
-                    if (playerRoster[TEST_DUMMY]->GetHealth() <= 0) {
-                        cout << playerRoster[TEST_DUMMY]->GetName() << " is defeated. The party wins!" << endl;
-                        return 0;
+                        currentPlayer->DisplayStats();
+                        currentPlayer->DisplayActions(playerRoster[TEST_DUMMY]);
+                        cout << endl;
+                        //check if Enemy is defeated
+                        if (playerRoster[TEST_DUMMY]->GetHealth() <= 0) {
+                            throw string (playerRoster[TEST_DUMMY]->GetName() + " is defeated. The party wins!\n");
+                        }
+                    } else {
+                        continue;
                     }
-                }
-                else {
-                    continue;
-                }
-            }
-            else if (typeid(*currentPlayer).name() == typeid(Enemy).name()) {
-                //attack steps for Enemy types
-                target = rand() % combatList.size();
-                bool attacked = false;
+                } else if (typeid(*currentPlayer).name() == typeid(Enemy).name()) {
+                    //attack steps for Enemy types
+                    target = rand() % combatList.size();
+                    bool attacked = false;
 
-                while (attacked == false) {
-                    if (combatList.at(target)->GetHealth() <= 0) {
-                        target = rand() % combatList.size();
-                    }
-                    //Enemy auto-attacks
-                    else if (typeid(*combatList.at(target)).name() != typeid(Enemy).name()) {
-                        currentPlayer->Attack(combatList.at(target));
-                        attacked = true;
-                        //check if Enemy's target has 0 or less hitpoints
+                    while (attacked == false) {
                         if (combatList.at(target)->GetHealth() <= 0) {
-                            cout << combatList.at(target)->GetName() << " has fallen." << endl;
+                            target = rand() % combatList.size();
+                        }
+                            //Enemy auto-attacks
+                        else if (typeid(*combatList.at(target)).name() != typeid(Enemy).name()) {
+                            currentPlayer->Attack(combatList.at(target));
+                            attacked = true;
+                            //check if Enemy's target has 0 or less hitpoints
+                            if (combatList.at(target)->GetHealth() <= 0) {
+                                cout << combatList.at(target)->GetName() << " has fallen." << endl;
+                            }
+                        } else {
+                            target = rand() % combatList.size();
                         }
                     }
-                    else {
-                        target = rand() % combatList.size();
-                    }
                 }
             }
+            //check if party is defeated
+            if ((partyList.at(0)->GetHealth() <= 0) && (partyList.at(1)->GetHealth() <= 0) &&
+                (partyList.at(2)->GetHealth() <= 0)) {
+                throw string ("The party is defeated.\n");
+                return 0;
+            }
         }
-        //check if party is defeated
-        if ((partyList.at(0)->GetHealth() <=0) && (partyList.at(1)->GetHealth() <= 0) &&
-        (partyList.at(2)->GetHealth() <= 0)) {
-            cout << "The party is defeated." << endl;
-            return 0;
-        }
+    }
+    catch(string battleEnd) {
+        cout << battleEnd;
     }
 
     return 0;
