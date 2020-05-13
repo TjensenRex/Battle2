@@ -159,7 +159,6 @@ int main() {
             if ((partyList.at(0)->GetHealth() <= 0) && (partyList.at(1)->GetHealth() <= 0) &&
                 (partyList.at(2)->GetHealth() <= 0)) {
                 throw string ("The party is defeated.\n");
-                return 0;
             }
         }
     }
