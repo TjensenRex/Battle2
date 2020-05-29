@@ -7,14 +7,14 @@
 #include "Enemy.h"
 #include <cstdlib>
 #include <ctime>
-#include <typeinfo>
 
 using namespace std;
 
-const static string TEST_DUMMY = "Mark";
+const static string TEST_DUMMY = "Mark-ENEMY";
 const static int PARTY_SIZE = 3;
 
-int main() {
+int main()
+{
     map<string, Human*> playerRoster;
     string playerName;
     string classChoice;
@@ -29,32 +29,39 @@ int main() {
 
     /* This first part prompts a user to type a class name until a valid class name is entered. Eventually, might try to
      * create an "inventory" class or vector data member for "Human" that can hold items which modify the player's stats */
-    while (classChoice != "Done") {
-
-        while ((classChoice != "Wizard") && (classChoice != "Swordsman")) {
-            if ((classChoice != "Wizard") && (classChoice != "Swordsman")) {
+    while (classChoice != "Done")
+    {
+        while ((classChoice != "Wizard") && (classChoice != "Swordsman"))
+        {
+            //if ((classChoice != "Wizard") && (classChoice != "Swordsman"))
+            //{
                 cout << classChoice << ". Sorry, that is not in our classes. Please try again." << endl;
                 getline(cin, classChoice);
-            }
+           // }
         }
         cout << "And what will their name be?" << endl;
         //loop until a unique name is entered
-        do {
+        do
+            {
             getline(cin, playerName);
-            if (playerRoster.count(playerName) == 1) {
+            if (playerRoster.count(playerName) == true)
+            {
                 cout << "That name already exists. Please choose another." << endl;
                 continue;
             }
             else {
                 break;
             }
-        }while (playerRoster.count(playerName) == 1);
+        }
+        while (playerRoster.count(playerName) == true);
 
-        if (classChoice == "Wizard") {
+        if (classChoice == "Wizard")
+        {
             playerRoster.emplace(playerName, new Wizard(playerName));
             cout << "Wizard " << playerRoster[playerName]->GetName() << " created." << endl;
         }
-        else if (classChoice == "Swordsman") {
+        else if (classChoice == "Swordsman")
+        {
             playerRoster.emplace(playerName, new Swordsman(playerName));
             cout << "Swordsman " << playerName << " created." << endl;
         }
@@ -63,35 +70,40 @@ int main() {
     }
     //A player may choose from a list comprised of as many characters as they created
     cout << endl;
-    for (pair<string, Human*> characterName : playerRoster) {
+    for (pair<string, Human*> characterName : playerRoster)
+    {
         cout << characterName.first << endl;
     }
     //loop until three valid characters are selected, displaying a list of current selections
-    for (int i = 0; i < PARTY_SIZE;) {
+    for (int i = 0; i < PARTY_SIZE;)
+    {
         cout << "Choose from the list to create your party: " << endl;
-        for (Human* character : partyList) {
+        for (Human* character : partyList)
+        {
             cout << character->GetName() << endl;
         }
 
         getline(cin, playerName);
-        for (pair<string, Human*> characterName : playerRoster) {
-            if (characterName.first == playerName) {
-                partyList.push_back(characterName.second);
-                cout << partyList.at(i)->GetName() << " added." << endl;
-                ++i;
-            }
+        if (playerRoster.count(playerName) == false)
+        {
+            partyList.push_back(playerRoster[playerName]);
+            cout << partyList.at(i)->GetName() << " added." << endl;
+            ++i;
         }
     }
 
     cout << endl;
     cout << "For this battle, you will face " << playerRoster[TEST_DUMMY]->GetName() << "." << endl;
-    srand(time(0));
+    srand(time(nullptr));
 
-    for (Human* character : partyList) {
-        if (combatList.size() == 0){
+    for (Human* character : partyList)
+    {
+        if (combatList.empty())
+        {
             combatList.push_back(character);
         }
-        else {
+        else
+            {
             //combatList is randomly populated with the players from partyList
             target = rand() % combatList.size();
             combatList.insert(combatList.begin() + target, character);
@@ -101,7 +113,8 @@ int main() {
     //Enemy is randomly inserted in combatList
     target = rand() % combatList.size();
     combatList.insert(combatList.begin() + target, playerRoster[TEST_DUMMY]);
-    for (Human* character : combatList) {
+    for (Human* character : combatList)
+    {
         cout << character->GetName() << endl;
     }
     cout << endl;
@@ -109,14 +122,17 @@ int main() {
     //Swordsman: 9Swordsman. Enemy: 5Enemy. Wizard: 6Wizard.
     /* This is meant to be a kind of turn-based combat, going until the enemy or the party reaches 0 hitpoints
      * Eventually, would like to learn how to call this as part of a larger program */
-    /*party system needs:
-     * going in an order determined randomly by the system.*/
-    try {
-        while (playerRoster[TEST_DUMMY]->GetHealth() > 0) {
-            for (Human *currentPlayer : combatList) {
-                if (typeid(*currentPlayer).name() != typeid(Enemy).name()) {
+    try
+    {
+        while (playerRoster[TEST_DUMMY]->GetHealth() > 0)
+        {
+            for (Human *currentPlayer : combatList)
+            {
+                if (typeid(*currentPlayer).name() != typeid(Enemy).name())
+                {
                     //attack steps for party members
-                    if (currentPlayer->GetHealth() > 0) {
+                    if (currentPlayer->GetHealth() > 0)
+                    {
                         cout << playerRoster[TEST_DUMMY]->GetName() << ": " << playerRoster[TEST_DUMMY]->GetHealth()
                              << "hp"
                              << endl << endl;
@@ -126,30 +142,41 @@ int main() {
                         currentPlayer->DisplayActions(playerRoster[TEST_DUMMY]);
                         cout << endl;
                         //check if Enemy is defeated
-                        if (playerRoster[TEST_DUMMY]->GetHealth() <= 0) {
+                        if (playerRoster[TEST_DUMMY]->GetHealth() <= 0)
+                        {
                             throw string (playerRoster[TEST_DUMMY]->GetName() + " is defeated. The party wins!\n");
                         }
-                    } else {
+                    }
+                    else
+                        {
                         continue;
                     }
-                } else if (typeid(*currentPlayer).name() == typeid(Enemy).name()) {
+                }
+                else if (typeid(*currentPlayer).name() == typeid(Enemy).name())
+                {
                     //attack steps for Enemy types
                     target = rand() % combatList.size();
                     bool attacked = false;
 
-                    while (attacked == false) {
-                        if (combatList.at(target)->GetHealth() <= 0) {
+                    while (!attacked)
+                    {
+                        if (combatList.at(target)->GetHealth() <= 0)
+                        {
                             target = rand() % combatList.size();
                         }
-                            //Enemy auto-attacks
-                        else if (typeid(*combatList.at(target)).name() != typeid(Enemy).name()) {
+                        //Enemy auto-attacks
+                        else if (typeid(*combatList.at(target)).name() != typeid(Enemy).name())
+                        {
                             currentPlayer->Attack(combatList.at(target));
                             attacked = true;
                             //check if Enemy's target has 0 or less hitpoints
-                            if (combatList.at(target)->GetHealth() <= 0) {
+                            if (combatList.at(target)->GetHealth() <= 0)
+                            {
                                 cout << combatList.at(target)->GetName() << " has fallen." << endl;
                             }
-                        } else {
+                        }
+                        else
+                            {
                             target = rand() % combatList.size();
                         }
                     }
@@ -157,12 +184,14 @@ int main() {
             }
             //check if party is defeated
             if ((partyList.at(0)->GetHealth() <= 0) && (partyList.at(1)->GetHealth() <= 0) &&
-                (partyList.at(2)->GetHealth() <= 0)) {
+               (partyList.at(2)->GetHealth() <= 0))
+            {
                 throw string ("The party is defeated.\n");
             }
         }
     }
-    catch(string battleEnd) {
+    catch(string battleEnd)
+    {
         cout << battleEnd;
     }
 

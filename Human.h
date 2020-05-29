@@ -21,7 +21,6 @@ public:
     virtual void DisplayStats();
     virtual void DisplayActions(Human* defender);
     void TakeDamage(int damage);
-    int GetAttack() const;
     int GetHealth() const;
     int GetDefense() const;
     string GetName() const;

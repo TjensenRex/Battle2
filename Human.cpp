@@ -4,43 +4,48 @@
 
 #include "Human.h"
 
-Human::Human(string playerName) {
+Human::Human(string playerName)
+{
     name = playerName;
     health = BASE_HEALTH;
     attack = BASE_ATTACK + weapon.GetAttack();
     defense = BASE_DEF;
 }
-void Human::Attack(Human* defender) {
+void Human::Attack(Human* defender)
+{
     cout << name << " attacks " << defender->GetName() << " for " << attack - defender->GetDefense() << " damage." << endl;
     defender->TakeDamage(attack);
 }
-void Human::DisplayActions(Human* defender) {
+void Human::DisplayActions(Human* defender)
+{
 
-    if (health <= 0) {
+    if (health <= 0)
+    {
         cout << name << " is currently unconscious." << endl;
         return;
     }
-
     cout << "Attack" << endl;
     Attack(defender);
 }
-void Human::TakeDamage(int damage) {
+void Human::TakeDamage(int damage)
+{
     health = health - (damage - defense);
 }
-int Human::GetAttack() const {
-    return attack;
-}
-int Human::GetHealth() const {
+int Human::GetHealth() const
+{
     return health;
 }
-int Human::GetDefense() const {
+int Human::GetDefense() const
+{
     return defense;
 }
-string Human::GetName() const {
+string Human::GetName() const
+{
     return name;
 }
 
-void Human::DisplayStats() {
+void Human::DisplayStats()
+{
     cout << "hp: " << health << endl
          << "defense: " << defense << endl
          << "attack: " << attack << endl;

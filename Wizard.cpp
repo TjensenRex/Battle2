@@ -4,63 +4,72 @@
 
 #include "Wizard.h"
 
-Wizard::Wizard(string playerName) {
+Wizard::Wizard(string playerName)
+{
     name = playerName;
     mana = 50;
     attack = 20;
 }
 
-int Wizard::GetMana() const {
-    return mana;
-}
-
-void Wizard::Attack(Human *defender) {
-    if (mana >= 15) {
+void Wizard::Attack(Human *defender)
+{
+    if (mana >= 15)
+    {
         mana = mana - 15;
-        cout << name << " casts a mighty fireball at " << defender->GetName() << " for 15 Mana, dealing " << attack - defender->GetDefense() << " damage." << endl;
+        cout << name << " casts a mighty fireball at " << defender->GetName() << " for 15 Mana, dealing "
+             << attack - defender->GetDefense() << " damage." << endl;
         defender->TakeDamage(attack);
     }
-    else {
+    else
+        {
         cout << "Not enough Mana! Instead, " << name << " focuses their mind to gather ambient energy." << endl;
         mana = mana + 20;
     }
 }
 
-void Wizard::Heal() {
-    if (mana >= 15) {
+void Wizard::Heal()
+{
+    if (mana >= 15)
+    {
         mana = mana - 15;
         cout << name << " casts a healing spell, healing " << attack << " hp for 15 Mana." << endl;
         health = health + attack;
-        if (health > BASE_HEALTH) {
+        if (health > BASE_HEALTH)
+        {
             health = BASE_HEALTH;
         }
     }
-    else {
+    else
+        {
         cout << "Not enough Mana! Instead, " << name << " focuses their mind to gather ambient energy." << endl;
         mana = mana + 20;
     }
 }
 
-
-void Wizard::DisplayStats() {
+void Wizard::DisplayStats()
+{
     cout << "hp: " << health << endl
          << "mana: " << mana << endl
          << "defense: " << defense << endl
          << "attack: " << attack << endl;
 }
 
-void Wizard::DisplayActions(Human *defender) {
+void Wizard::DisplayActions(Human *defender)
+{
     string userChoice;
 
     cout << "Attack\nHeal" << endl;
     getline(cin, userChoice);
-    if (userChoice == "Attack") {
+    if (userChoice == "Attack")
+    {
         Attack(defender);
     }
-    else if (userChoice == "Heal") {
+    else if (userChoice == "Heal")
+    {
         Heal();
     }
-    else {
+    else
+        {
         cout << "That is not a valid action. Please try again." << endl;
         DisplayActions(defender);
     }

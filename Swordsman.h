@@ -7,6 +7,7 @@
 
 #include "Human.h"
 #include <string>
+
 class Swordsman : public Human {
 public:
     Swordsman(string playerName = "none");

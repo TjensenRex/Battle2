@@ -11,7 +11,6 @@ class Wizard : public Human {
 public:
     Wizard(string playerName);
     void DisplayStats();
-    int GetMana() const;
     void Attack( Human* defender);
     void Heal();
     void DisplayActions(Human* defender);

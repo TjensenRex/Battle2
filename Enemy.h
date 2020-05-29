@@ -9,7 +9,7 @@
 
 class Enemy : public Human {
 public:
-    Enemy(string playerName);
+    explicit Enemy(string playerName);
 private:
 };
 

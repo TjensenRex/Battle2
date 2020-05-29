@@ -5,7 +5,7 @@
 #include "Weapon.h"
 
 void Weapon::Equip() {
-    attack = 10;
+    attack = 5;
 }
 
 void Weapon::Unequip() {

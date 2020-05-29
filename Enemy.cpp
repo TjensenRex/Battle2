@@ -4,9 +4,10 @@
 
 #include "Enemy.h"
 
-Enemy::Enemy(string playerName) {
+Enemy::Enemy(string playerName)
+{
     name = playerName;
     health = 80;
-    attack = 35;
+    attack = 40;
     defense = 5;
 }
