@@ -6,7 +6,7 @@
 
 Human::Human(string playerName)
 {
-    name = playerName;
+    name = std::move(playerName);
     health = BASE_HEALTH;
     attack = BASE_ATTACK + weapon.GetAttack();
     defense = BASE_DEF;
@@ -27,15 +27,15 @@ void Human::DisplayActions(Human* defender)
     cout << "Attack" << endl;
     Attack(defender);
 }
-void Human::TakeDamage(int damage)
+void Human::TakeDamage(unsigned short damage)
 {
     health = health - (damage - defense);
 }
-int Human::GetHealth() const
+short Human::GetHealth() const
 {
     return health;
 }
-int Human::GetDefense() const
+unsigned short Human::GetDefense() const
 {
     return defense;
 }

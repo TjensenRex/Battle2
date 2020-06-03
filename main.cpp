@@ -11,7 +11,7 @@
 using namespace std;
 
 const static string TEST_DUMMY = "Mark-ENEMY";
-const static int PARTY_SIZE = 3;
+const static short PARTY_SIZE = 3;
 
 int main()
 {
@@ -21,7 +21,7 @@ int main()
     playerRoster.emplace(TEST_DUMMY, new Enemy(TEST_DUMMY)); // This player's residency will only last as long as his usefulness 3:)
     vector<Human*> partyList(0);
     vector<Human*> combatList(0);
-    int target;
+    short target;
 
     cout << "Welcome to Fantasy Battle Simulation!" << endl;
     cout << "Please create a player by choosing a class: \nWizard \nSwordsman" << endl;
@@ -44,7 +44,7 @@ int main()
         do
             {
             getline(cin, playerName);
-            if (playerRoster.count(playerName) == true)
+            if (playerRoster.count(playerName))
             {
                 cout << "That name already exists. Please choose another." << endl;
                 continue;
@@ -53,7 +53,7 @@ int main()
                 break;
             }
         }
-        while (playerRoster.count(playerName) == true);
+        while (playerRoster.count(playerName));
 
         if (classChoice == "Wizard")
         {
@@ -84,7 +84,7 @@ int main()
         }
 
         getline(cin, playerName);
-        if (playerRoster.count(playerName) == false)
+        if (playerRoster.count(playerName) == 1)
         {
             partyList.push_back(playerRoster[playerName]);
             cout << partyList.at(i)->GetName() << " added." << endl;
@@ -94,7 +94,7 @@ int main()
 
     cout << endl;
     cout << "For this battle, you will face " << playerRoster[TEST_DUMMY]->GetName() << "." << endl;
-    srand(time(nullptr));
+    srand((unsigned)time(0));
 
     for (Human* character : partyList)
     {
@@ -155,11 +155,11 @@ int main()
                 else if (typeid(*currentPlayer).name() == typeid(Enemy).name())
                 {
                     //attack steps for Enemy types
-                    target = rand() % combatList.size();
                     bool attacked = false;
 
                     while (!attacked)
                     {
+                        target = rand() % combatList.size();
                         if (combatList.at(target)->GetHealth() <= 0)
                         {
                             target = rand() % combatList.size();
@@ -174,10 +174,6 @@ int main()
                             {
                                 cout << combatList.at(target)->GetName() << " has fallen." << endl;
                             }
-                        }
-                        else
-                            {
-                            target = rand() % combatList.size();
                         }
                     }
                 }

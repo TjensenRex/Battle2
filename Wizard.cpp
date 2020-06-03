@@ -6,7 +6,7 @@
 
 Wizard::Wizard(string playerName)
 {
-    name = playerName;
+    name = std::move(playerName);
     mana = 50;
     attack = 20;
 }

@@ -6,7 +6,7 @@
 
 Enemy::Enemy(string playerName)
 {
-    name = playerName;
+    name = std::move(playerName);
     health = 80;
     attack = 40;
     defense = 5;

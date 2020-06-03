@@ -2,36 +2,32 @@
 // Created by tjensen on 4/24/2020.
 //
 
-#ifndef BATTLE2_HUMAN_H
-#define BATTLE2_HUMAN_H
+#pragma once
 
 #include <iostream>
 #include <string>
 #include "Weapon.h"
 using namespace std;
 
-const static int BASE_HEALTH = 50;
-const static int BASE_ATTACK = 5;
-const static int BASE_DEF = 0;
+const static short BASE_HEALTH = 50;
+const static short BASE_ATTACK = 5;
+const static short BASE_DEF = 0;
 
 class Human {
 public:
-    Human(string playerName = "none");
+    explicit Human(string playerName = "none");
     virtual void Attack(Human* defender);
     virtual void DisplayStats();
     virtual void DisplayActions(Human* defender);
-    void TakeDamage(int damage);
-    int GetHealth() const;
-    int GetDefense() const;
+    void TakeDamage(unsigned short damage);
+    short GetHealth() const;
+    unsigned short GetDefense() const;
     string GetName() const;
 
 protected:
-    unsigned int health;
-    unsigned int attack;
-    unsigned int defense;
+    short health;
+    unsigned short attack;
+    unsigned short defense;
     string name;
     Weapon weapon;
 };
-
-
-#endif //BATTLE2_HUMAN_H

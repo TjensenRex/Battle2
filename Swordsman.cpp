@@ -3,13 +3,14 @@
 //
 
 #include "Swordsman.h"
+
 const int BASE_ATK = 5;
 const int BASE_HP = 60;
 const int BASE_DF = 5;
 Swordsman::Swordsman(string playerName)
 {
     weapon.Equip();
-    name = playerName;
+    name = std::move(playerName);
     attack = BASE_ATK + weapon.GetAttack();
     health = BASE_HP;
     defense = BASE_DF;

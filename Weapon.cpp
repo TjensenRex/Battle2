@@ -12,7 +12,7 @@ void Weapon::Unequip() {
     attack = 0;
 }
 
-int Weapon::GetAttack() const {
+unsigned short Weapon::GetAttack() const {
     return attack;
 }
 

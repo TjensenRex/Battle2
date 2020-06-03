@@ -2,21 +2,17 @@
 // Created by tjensen on 4/24/2020.
 //
 
-#ifndef BATTLE2_WIZARD_H
-#define BATTLE2_WIZARD_H
+#pragma once
 
 #include "Human.h"
 #include <string>
 class Wizard : public Human {
 public:
-    Wizard(string playerName);
-    void DisplayStats();
-    void Attack( Human* defender);
+    explicit Wizard(string playerName);
+    void DisplayStats() override;
+    void Attack( Human* defender) override;
     void Heal();
-    void DisplayActions(Human* defender);
+    void DisplayActions(Human* defender) override;
 private:
-    unsigned int mana;
+    unsigned short mana;
 };
-
-
-#endif //BATTLE2_WIZARD_H
